@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<extension version="2.5" type="plugin" group="authentication">
+	<name>Authentication - AAF</name>
+	<author>Daniel Micevski</author>
+	<creationDate>February 2015</creationDate>
+	<copyright>Copyright (C) 2015 V3 Alliance.</copyright>
+	<authorEmail>dmicevski@v3.org.au</authorEmail>
+	<authorUrl>http://www.v3.org.au/</authorUrl>
+	<version>2.5</version>
+	<description>Handles user authentication against AAF</description>
+	<files>
+		<filename plugin="aaf">aaf.php</filename>
+		<filename>JWT.php</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="app_secret"   type="text" size="32" label="Consumer Secret" description="Consumer Secret provided when your hub is registered on AAF" />
+				<field name="aaf_principal_issuer"   type="text" size="500" label="AAF Issuer URL" description="URL to the AAF Principal Issuer" />
+				<field name="aaf_login_url"   type="text" size="500" label="AAF Login URL" description="URL to the AAF login" />
+				<field name="display_name" type="text" size="32" label="Display name"    description="Text to display on the site when referencing this plugin" default="AAF" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>

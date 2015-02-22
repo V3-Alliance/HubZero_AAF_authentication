@@ -1,0 +1,27 @@
+#aaf {
+	background: url("https://rapid.test.aaf.edu.au/aaf_service_439x105.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 50px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: none;
+	border-radius: 0px;
+}
+
+#aaf:hover {
+	-webkit-border-radius: 0.75em;
+	-moz-border-radius: 0.75em;
+	border-radius: 0.75em;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+#aaf p {
+	display: none;
+}
+
+#aaf+a {
+	display: none !important;
+}

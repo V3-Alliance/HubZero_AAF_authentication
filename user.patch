@@ -1,0 +1,4 @@
+37c37
+< 		$authenticator = JRequest::getVar('authenticator', '', 'method');
+---
+> 		$authenticator = JRequest::getVar('authenticator');
