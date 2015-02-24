@@ -16,7 +16,7 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="app_secret"   type="text" size="32" label="Consumer Secret" description="Consumer Secret provided when your hub is registered on AAF" />
+				<field name="app_secret"   type="text" size="32" label="Consumer Secret" description="Consumer Secret provided when your hub is registered on AAF. Must not contain a '<' character" />
 				<field name="aaf_principal_issuer"   type="text" size="500" label="AAF Issuer URL" description="URL to the AAF Principal Issuer" />
 				<field name="aaf_login_url"   type="text" size="500" label="AAF Login URL" description="URL to the AAF login" />
 				<field name="display_name" type="text" size="32" label="Display name"    description="Text to display on the site when referencing this plugin" default="AAF" />
