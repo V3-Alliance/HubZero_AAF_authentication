@@ -25,3 +25,11 @@
 #aaf+a {
 	display: none !important;
 }
+
+#aaf .account-type {
+	display: none;
+}
+
+#aaf .account-id {
+	display: none !important;
+}
