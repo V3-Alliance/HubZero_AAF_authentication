@@ -165,21 +165,49 @@ class plgAuthenticationaaf extends JPlugin
 			if($aafResponse->iss == $this->params->get('aaf_principal_issuer') && $aafResponse->aud == $service && $now > $aafResponse->nbf && $now < $aafResponse->exp) {
 				$attributes = $aafResponse->{'https://aaf.edu.au/attributes'};
 				
-				// Get users with the specified email.
+				// Get authenticated linked users with the specified email.
 				$hzals = Hubzero_Auth_Link::find_by_email($attributes->mail);
 				
 				if($hzals) {
 					// Existing profile found - use that.
 					$hzal = Hubzero_Auth_Link::find_by_id($hzals[0]['id']);
 				} else {
-					// No existing profile found.
+					// Get users with profiles that may not have been linked.
+					$profiles = Hubzero_User_Profile_Helper::find_by_email($attributes->mail);
 					
-					// Username should be the string before the @ of the email.
-					$sub_email = explode('@', $attributes->mail, 2);
-					$username = $sub_email[0];
-					
-					// Try finding it by a specific username derived from the email address or just create a new temp profile.
-					$hzal = Hubzero_Auth_Link::find_or_create('authentication', 'aaf', null, $username);
+					if($profiles) {
+						// Existing profile found - try use that.
+						$juser = JFactory::getUser();
+						
+						if(!$juser->get('guest')) {
+							// We are linking accounts as the user is logged in to Hub Zero.
+							$userProfile = new Hubzero_User_Profile($profiles[0]);
+							
+							$hzad = Hubzero_Auth_Domain::getInstance('authentication', 'aaf', '');
+							
+							// Link the profile.
+							$hzal = Hubzero_Auth_Link::find_or_create('authentication', 'aaf', null, $profiles[0]);
+							$hzal->user_id = $userProfile->get('uidNumber');
+						} else {
+							// We are creating a new account. Not linking to an available profile that already exists.
+							
+							// Username should be the string before the @ of the email.
+							$sub_email = explode('@', $attributes->mail, 2);
+							$username = $sub_email[0];
+							
+							// Create a new temp profile.
+							$hzal = Hubzero_Auth_Link::find_or_create('authentication', 'aaf', null, $username);
+						}
+					} else {
+						// No existing profile found.
+						
+						// Username should be the string before the @ of the email.
+						$sub_email = explode('@', $attributes->mail, 2);
+						$username = $sub_email[0];
+						
+						// Create a new temp profile.
+						$hzal = Hubzero_Auth_Link::find_or_create('authentication', 'aaf', null, $username);
+					}
 				}
 				
 				$hzal->email = $attributes->mail;
