@@ -34,14 +34,15 @@ class plgAuthenticationaaf extends JPlugin
 	}
 
 	/**
-	 * Check login status of current user with regards to AAF (not currently used)
+	 * just adds stylesheet:
 	 *
 	 * @access	public
 	 * @return	Array $status
 	 */
 	public function status()
 	{
-		// Not implemented intentionally.
+		$document = JFactory::getDocument();
+		$document->addStyleSheet(JURI::base(). "plugins/authentication/aaf/assets/aaf.css");
 	}
 
 	/**
@@ -147,7 +148,8 @@ class plgAuthenticationaaf extends JPlugin
 		$json = $jwt->decode($options['assertion'], $this->params->get('app_secret'));
 		
 		$aafResponse = json_decode($json);
-		
+		error_log(print_r($aafResponse, true), 3, "/tmp/hzm.log");
+
 		if($aafResponse != null) {
 			$juri =& JURI::getInstance();
 			$service = trim($juri->base(), DS);
@@ -165,15 +167,15 @@ class plgAuthenticationaaf extends JPlugin
 			if($aafResponse->iss == $this->params->get('aaf_principal_issuer') && $aafResponse->aud == $service && $now > $aafResponse->nbf && $now < $aafResponse->exp) {
 				$attributes = $aafResponse->{'https://aaf.edu.au/attributes'};
 				
-				// Get authenticated linked users with the specified email.
-				$hzals = Hubzero_Auth_Link::find_by_email($attributes->mail);
+				// Get authenticated linked users with the specified email. 	Hubzero_Auth_Link, Hubzero_Auth_Domain, Hubzero_User_Profile,  is gone?
+				$hzals = \Hubzero\Auth\Link::find_by_email($attributes->mail);
 				
 				if($hzals) {
 					// Existing profile found - use that.
-					$hzal = Hubzero_Auth_Link::find_by_id($hzals[0]['id']);
+					$hzal = \Hubzero\Auth\Link::find_by_id($hzals[0]['id']);
 				} else {
 					// Get users with profiles that may not have been linked.
-					$profiles = Hubzero_User_Profile_Helper::find_by_email($attributes->mail);
+					$profiles = \Hubzero\User\Profile\Helper::find_by_email($attributes->mail);
 					
 					if($profiles) {
 						// Existing profile found - try use that.
@@ -181,12 +183,12 @@ class plgAuthenticationaaf extends JPlugin
 						
 						if(!$juser->get('guest')) {
 							// We are linking accounts as the user is logged in to Hub Zero.
-							$userProfile = new Hubzero_User_Profile($profiles[0]);
+							$userProfile = new Hubzero\User\Profile($profiles[0]);
 							
-							$hzad = Hubzero_Auth_Domain::getInstance('authentication', 'aaf', '');
+							$hzad = \Hubzero\Auth\Domain::getInstance('authentication', 'aaf', '');
 							
 							// Link the profile.
-							$hzal = Hubzero_Auth_Link::find_or_create('authentication', 'aaf', null, $profiles[0]);
+							$hzal = \Hubzero\Auth\Link::find_or_create('authentication', 'aaf', null, $profiles[0]);
 							$hzal->user_id = $userProfile->get('uidNumber');
 						} else {
 							// We are creating a new account. Not linking to an available profile that already exists.
@@ -196,7 +198,7 @@ class plgAuthenticationaaf extends JPlugin
 							$username = $sub_email[0];
 							
 							// Create a new temp profile.
-							$hzal = Hubzero_Auth_Link::find_or_create('authentication', 'aaf', null, $username);
+							$hzal = \Hubzero\Auth\Link::find_or_create('authentication', 'aaf', null, $username);
 						}
 					} else {
 						// No existing profile found.
@@ -206,7 +208,7 @@ class plgAuthenticationaaf extends JPlugin
 						$username = $sub_email[0];
 						
 						// Create a new temp profile.
-						$hzal = Hubzero_Auth_Link::find_or_create('authentication', 'aaf', null, $username);
+						$hzal = \Hubzero\Auth\Link::find_or_create('authentication', 'aaf', null, $username);
 					}
 				}
 				
