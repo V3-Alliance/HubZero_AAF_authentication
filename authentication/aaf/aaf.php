@@ -148,7 +148,7 @@ class plgAuthenticationaaf extends JPlugin
 		$json = $jwt->decode($options['assertion'], $this->params->get('app_secret'));
 		
 		$aafResponse = json_decode($json);
-		error_log(print_r($aafResponse, true), 3, "/tmp/hzm.log");
+//		error_log(print_r($aafResponse, true), 3, "/tmp/hzm.log");
 
 		if($aafResponse != null) {
 			$juri =& JURI::getInstance();
