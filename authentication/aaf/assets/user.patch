@@ -1,4 +1,11 @@
-37c37
-< 		$authenticator = JRequest::getVar('authenticator', '', 'method');
----
-> 		$authenticator = JRequest::getVar('authenticator');
+--- /var/www/example/components/com_users/controllers/user.php	2015-04-22 13:07:14.000000000 +1000
++++ user.php	2015-04-22 13:28:49.000000000 +1000
+@@ -35,7 +35,7 @@
+ 		$data['username'] = JRequest::getVar('username', '', 'method', 'username');
+ 		$data['password'] = JRequest::getString('passwd', '', 'post', JREQUEST_ALLOWRAW);
+ 
+-		$authenticator    = JRequest::getVar('authenticator', '', 'method');
++		$authenticator    = JRequest::getVar('authenticator');
+ 
+ 		// If a specific authenticator is specified try to call the login method for that plugin
+ 		if (!empty($authenticator)) {
