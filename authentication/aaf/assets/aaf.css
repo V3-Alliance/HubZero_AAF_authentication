@@ -1,20 +1,11 @@
+/* we are going to let the 1.3.1 rule '.auth .account' do as much of the heavy lifting as possible */
 .aaf {
-	background: #F48431 url("/plugins/authentication/aaf/assets/aaf_service_439x105.png") no-repeat;
-	background-size: contain;
-	height: 50px;
-	-webkit-box-shadow: none;
-	box-shadow: none;
-	border: none;
-	border-radius: 0;
+    background: #F48431 url("/plugins/authentication/aaf/assets/aaf_service_439x105.png") no-repeat;
+    background-size: contain;
 }
 
-.aaf:hover {
-	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
-}
-
-
+/* we have an image as our logo: so we don't want text to be shown */
+/* not sure how accessible this is? */
 .aaf div {
-	display: none !important;
+    display: none !important;
 }

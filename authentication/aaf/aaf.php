@@ -34,15 +34,20 @@ class plgAuthenticationaaf extends JPlugin
 	}
 
 	/**
-	 * just adds stylesheet:
-	 *
+	 * Could be used to just add stylesheet on login page: but not called on the register page.
+	 * The only way to get a stylesheet into all pages in a theme independent way is to add it to the providers.css
+	 * file:
+	 * cat /var/www/example/plugins/authentication/aaf/assets/aaf.css >> /var/www/example/components/com_users/assets/css/providers.css
 	 * @access	public
 	 * @return	Array $status
 	 */
 	public function status()
 	{
-		$document = JFactory::getDocument();
-		$document->addStyleSheet(JURI::base(). "plugins/authentication/aaf/assets/aaf.css");
+		// This is what you would put in to include the style sheet on the front page...
+		// $document = JFactory::getDocument();
+		// $document->addStyleSheet(JURI::base(). "plugins/authentication/aaf/assets/aaf.css");
+		// Or this if you had the stylesheet in plugins/authentication/aaf/assets/css/aaf.css ...
+		// \Hubzero\Document\Assets::addPluginStylesheet('authentication', 'aaf', 'aaf.css');
 	}
 
 	/**
