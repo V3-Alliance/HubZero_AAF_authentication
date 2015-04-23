@@ -8,7 +8,7 @@ Unzip and copy the aaf folder to the `/var/www/example/plugins/authentication/` 
 
 Once in place, you need to log in as the HZCMS administrator and then discover and enable the module.
 
-* Go to https://130.56.249.56/administrator/  and login
+* Go to https://<site_address>/administrator/  and login
 * Then to 'Extensions' -> 'Extensions Manager'
 * Select the 'Discover' tab
 * Hit the 'Discover' button
