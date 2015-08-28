@@ -14,6 +14,20 @@ Once in place, you need to log in as the HZCMS administrator and then discover a
 * Hit the 'Discover' button
 * Enable the AAF module that is now revealed.
 
+##Integration##
+
+* Register your service - eg. [Rapid Connect](https://rapid.aaf.edu.au/)
+* Set the callback URL to https://YOUR_DOMAIN/index.php?option=com_users&task=user.login&authenticator=aaf
+* Note down the secret somewhere secure
+  * NB: If you secret key contains the less than symbol "<" your key will get escaped when saving it in the Admin Plugin Manager.
+  * E.g: "fo0<B@r" will become "fo0" after you click save
+* Note down the URL provided by Rapid Connect once registered
+* Open the plugin 'Authentication - AAF' via the plugin manager and edit the following properties
+  * Set the status to 'Enabled'
+  * Set the Consumer Secret with the secret set previously when registering your service with Rapid Connect
+  * Set the AAF Issuer URL - eg. https://rapid.aaf.edu.au
+  * Set the AAF Login URL to the URL provided previously by Rapid Connect when registering your service
+
 ##Add the CSS##
 
 The css file needs to be appended to the providers.css file:
